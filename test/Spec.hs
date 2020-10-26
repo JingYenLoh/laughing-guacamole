@@ -20,6 +20,10 @@ pJsonBoolSpec = describe "pJsonBool" $ do
     parse jsonBool "" "true" `shouldParse` (JsonBool True)
   it "parses false" $ do
     parse jsonBool "" "false" `shouldParse` (JsonBool False)
+  it "does not parse frue" $ do
+    parse jsonBool "" `shouldFailOn` "frue"
+  it "does not parse talse" $ do
+    parse jsonBool "" `shouldFailOn` "talse"
 
 pJsonNullSpec :: Spec
 pJsonNullSpec = describe "pJsonNull" $ do
@@ -27,4 +31,4 @@ pJsonNullSpec = describe "pJsonNull" $ do
     parse jsonNull "" "null" `shouldParse` JsonNull
 
   it "does not parse nul" $ do
-    parse jsonNull "nul" `shouldFailOn` "nul"
+    parse jsonNull "" `shouldFailOn` "nul"
