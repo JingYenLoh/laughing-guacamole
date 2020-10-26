@@ -13,6 +13,18 @@ specTests :: Spec
 specTests = do
   pJsonBoolSpec
   pJsonNullSpec
+  pJsonNumberSpec
+
+pJsonNumberSpec :: Spec
+pJsonNumberSpec = describe "pJsonNumber" $ do
+  it "parses 0" $ do
+    parse jsonNumber "" "0" `shouldParse` (JsonNumber 0)
+  it "parses -1" $ do
+    parse jsonNumber "" "-1" `shouldParse` (JsonNumber (-1))
+  it "parses 0.0" $ do
+    parse jsonNumber "" "0.0" `shouldParse` (JsonNumber 0)
+  it "parses 0.2" $ do
+    parse jsonNumber "" "0.2" `shouldParse` (JsonNumber 0.2)
 
 pJsonBoolSpec :: Spec
 pJsonBoolSpec = describe "pJsonBool" $ do

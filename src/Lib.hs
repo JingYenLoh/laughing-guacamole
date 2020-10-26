@@ -1,6 +1,7 @@
 module Lib
   ( jsonNull,
     jsonBool,
+    jsonNumber,
     jsonValue,
     Value (..),
   )
@@ -21,7 +22,7 @@ data Value
   = JsonObject Object
   | JsonArray [Value]
   | JsonString String
-  | JsonNumber Int
+  | JsonNumber Double
   | JsonBool Bool
   | JsonNull
   deriving (Eq, Show)
@@ -38,6 +39,8 @@ jsonArray = undefined
 jsonString :: Parser Value
 jsonString = undefined
 
+-- see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/parsing-floats-with-parsec
+jsonNumber :: Parser Value
 jsonNumber = undefined
 
 jsonBool :: Parser Value
