@@ -1,0 +1,54 @@
+name: json-parser
+version: 0.1.0.0
+github: "JingYenLoh/json-parser"
+license: BSD3
+author: "JingYenLoh"
+maintainer: "lohjingyen@gmail.com"
+copyright: "MIT"
+
+extra-source-files:
+    - README.md
+    - ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Json parser for CS2104 Assignment
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/JingYenLoh/json-parser#readme>
+
+dependencies:
+    - base >= 4.7 && < 5
+    - parsec
+
+library:
+    source-dirs: src
+
+executables:
+    json-parser-exe:
+        main: Main.hs
+        source-dirs: app
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - json-parser
+        default-extensions: OverloadedStrings
+
+tests:
+    json-parser-test:
+        main: Spec.hs
+        source-dirs: test
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - json-parser
+            - hspec
+            - hspec-parsec
+            - tasty
+            - tasty-hspec
