@@ -14,6 +14,14 @@ specTests = do
   pJsonBoolSpec
   pJsonNullSpec
   pJsonNumberSpec
+  pJsonStringSpec
+
+pJsonStringSpec :: Spec
+pJsonStringSpec = describe "pJsonString" $ do
+  it "parses empty string" $ do
+    parse jsonString "" "\"\"" `shouldParse` (JsonString "")
+  it "parses non-empty string" $ do
+    parse jsonString "" "\"cs2104\"" `shouldParse` (JsonString "cs2104")
 
 pJsonNumberSpec :: Spec
 pJsonNumberSpec = describe "pJsonNumber" $ do

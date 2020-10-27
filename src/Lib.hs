@@ -2,13 +2,18 @@ module Lib
   ( jsonNull,
     jsonBool,
     jsonNumber,
+    jsonString,
     jsonValue,
     Value (..),
   )
 where
 
 import Text.Parsec
-import Text.Parsec.Token (GenTokenParser (symbol))
+
+-- import Text.Parsec.Combinator (between)
+-- import Text.Parsec.Language (emptyDef)
+
+-- import Text.Parsec.Token (lexeme, makeTokenParser, whiteSpace)
 
 type Parser = Parsec String ()
 
@@ -36,8 +41,12 @@ jsonObject = undefined
 jsonArray :: Parser Value
 jsonArray = undefined
 
+-- Doesn't handle escaped strings for now
 jsonString :: Parser Value
-jsonString = undefined
+jsonString = do
+  _ <- char '"'
+  s <- manyTill anyChar (char '"')
+  return $ JsonString s
 
 -- see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/parsing-floats-with-parsec
 jsonNumber :: Parser Value
