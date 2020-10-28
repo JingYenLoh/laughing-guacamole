@@ -14,7 +14,7 @@ bug-reports:    https://github.com/JingYenLoh/json-parser/issues
 author:         JingYenLoh
 maintainer:     lohjingyen@gmail.com
 copyright:      MIT
-license:        BSD3
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
