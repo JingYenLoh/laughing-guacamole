@@ -48,10 +48,7 @@ jsonArray = do
 
 -- Doesn't handle escaped strings for now
 jsonString :: Parser Value
-jsonString = do
-  _ <- char '"'
-  s <- manyTill anyChar (char '"')
-  return $ JsonString s
+jsonString = JsonString <$> (char '"' *> manyTill anyChar (char '"'))
 
 -- see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/parsing-floats-with-parsec
 -- parse positive int for now
