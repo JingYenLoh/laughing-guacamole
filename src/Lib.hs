@@ -67,10 +67,9 @@ jsonBool =
 
 jsonValue :: Parser Value
 jsonValue =
-  -- jsonObject
-  --   <|>
-  jsonArray
-    <|> jsonString
-    <|> jsonNumber
+  jsonNull
     <|> jsonBool
-    <|> jsonNull
+    <|> jsonNumber
+    <|> jsonString
+    <|> jsonArray
+    <|> jsonObject
