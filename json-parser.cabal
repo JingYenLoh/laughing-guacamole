@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 502a13cf10ed72fa8cc5f2f94670d02ffb58b9d16382a654256e88a80c6d9a39
+-- hash: 86699d6ec631654d025a650925381937456e348f2448a074d3f2b5ebacdc0048
 
 name:           json-parser
 version:        0.1.0.0

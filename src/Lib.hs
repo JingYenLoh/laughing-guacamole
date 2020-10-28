@@ -1,5 +1,6 @@
 module Lib
   ( jsonNull,
+    jsonArray,
     jsonBool,
     jsonNumber,
     jsonString,
@@ -39,7 +40,11 @@ jsonObject :: Parser Value
 jsonObject = undefined
 
 jsonArray :: Parser Value
-jsonArray = undefined
+jsonArray = do
+  char '['
+  xs <- sepBy jsonValue (spaces *> char ',' <* spaces)
+  char ']'
+  return $ JsonArray xs
 
 -- Doesn't handle escaped strings for now
 jsonString :: Parser Value
@@ -59,8 +64,9 @@ jsonBool =
 
 jsonValue :: Parser Value
 jsonValue =
-  jsonObject
-    <|> jsonArray
+  -- jsonObject
+  --   <|>
+  jsonArray
     <|> jsonString
     <|> jsonNumber
     <|> jsonBool

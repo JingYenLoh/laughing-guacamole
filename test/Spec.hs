@@ -15,6 +15,18 @@ specTests = do
   pJsonNullSpec
   pJsonNumberSpec
   pJsonStringSpec
+  pJsonArraySpec
+
+pJsonArraySpec :: Spec
+pJsonArraySpec = describe "pJsonArray" $ do
+  it "parses empty array" $ do
+    parse jsonArray "" "[]" `shouldParse` (JsonArray [])
+  it "parses array with one element" $ do
+    parse jsonArray "" "[1]" `shouldParse` (JsonArray [JsonNumber 1.0])
+  it "does not parse unpaired (left) brackets" $ do
+    parse jsonArray "" `shouldFailOn` "[[]"
+  it "does not parse unpaired (right) brackets" $ do
+    parse jsonArray "" `shouldFailOn` "[]]"
 
 pJsonStringSpec :: Spec
 pJsonStringSpec = describe "pJsonString" $ do
