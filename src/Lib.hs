@@ -54,8 +54,11 @@ jsonString = do
   return $ JsonString s
 
 -- see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/parsing-floats-with-parsec
+-- parse positive int for now
 jsonNumber :: Parser Value
-jsonNumber = undefined
+jsonNumber = do
+  n <- many1 digit
+  return $ JsonNumber (read n)
 
 jsonBool :: Parser Value
 jsonBool =
