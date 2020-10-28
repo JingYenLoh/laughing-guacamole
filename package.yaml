@@ -1,7 +1,7 @@
 name: json-parser
 version: 0.1.0.0
 github: "JingYenLoh/json-parser"
-license: BSD3
+license: MIT
 author: "JingYenLoh"
 maintainer: "lohjingyen@gmail.com"
 copyright: "MIT"

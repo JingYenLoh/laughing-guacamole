@@ -17,6 +17,11 @@ specTests = do
   pJsonStringSpec
   pJsonArraySpec
 
+pJsonObjectSpec :: Spec
+pJsonObjectSpec = describe "pJsonObject" $ do
+  it "parses empty object" $ do
+    parse jsonObject "" "{}" `shouldParse` (JsonObject [])
+
 pJsonArraySpec :: Spec
 pJsonArraySpec = describe "pJsonArray" $ do
   it "parses empty array" $ do

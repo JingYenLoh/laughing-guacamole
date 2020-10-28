@@ -3,6 +3,7 @@ module Lib
     jsonArray,
     jsonBool,
     jsonNumber,
+    jsonObject,
     jsonString,
     jsonValue,
     Value (..),
@@ -37,7 +38,9 @@ jsonNull :: Parser Value
 jsonNull = JsonNull <$ string "null"
 
 jsonObject :: Parser Value
-jsonObject = undefined
+jsonObject = char '{' *> spaces *> members <* spaces <* char '}'
+  where
+    members = undefined
 
 jsonArray :: Parser Value
 jsonArray = do
