@@ -25,7 +25,8 @@ pJsonObjectSpec = describe "pJsonObject" $ do
   it "parses { \"foo\": null }" $ do
     parse jsonObject "" "{ \"foo\": null }" `shouldParse` (JsonObject [("foo", JsonNull)])
   it "parses nested objects" $ do
-    parse jsonObject "" "{ \"foo\": { \"bar\": 3 } }" `shouldParse` (JsonObject [("foo", (JsonObject [("bar", JsonNumber 3)]))])
+    parse jsonObject "" "{ \"foo\": { \"bar\": 3 } }"
+      `shouldParse` (JsonObject [("foo", (JsonObject [("bar", JsonNumber 3)]))])
 
 pJsonArraySpec :: Spec
 pJsonArraySpec = describe "pJsonArray" $ do

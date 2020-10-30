@@ -17,10 +17,6 @@ import qualified Text.Parsec.Token as P
 
 type Parser = Parsec String ()
 
-data Json = JsonElement Element
-
-data Element = JsonValue JsonValue
-
 type Object = [(String, JsonValue)]
 
 data JsonValue
@@ -35,10 +31,6 @@ data JsonValue
 lexer = P.makeTokenParser emptyDef
 
 stringP = P.stringLiteral lexer
-
-commaSepP = P.commaSep lexer
-
-colonP = P.colon lexer
 
 jsonNull :: Parser JsonValue
 jsonNull = JsonNull <$ string "null"
