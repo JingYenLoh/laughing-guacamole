@@ -6,66 +6,66 @@ module Lib
     jsonObject,
     jsonString,
     jsonValue,
-    Value (..),
+    JsonValue (..),
   )
 where
 
+import Control.Applicative (Applicative (liftA2))
 import Text.Parsec
-
--- import Text.Parsec.Combinator (between)
--- import Text.Parsec.Language (emptyDef)
-
--- import Text.Parsec.Token (lexeme, makeTokenParser, whiteSpace)
+import Text.Parsec.Language (emptyDef)
+import qualified Text.Parsec.Token as P
 
 type Parser = Parsec String ()
 
 data Json = JsonElement Element
 
-data Element = JsonValue Value
+data Element = JsonValue JsonValue
 
-type Object = [(String, Value)]
+type Object = [(String, JsonValue)]
 
-data Value
+data JsonValue
   = JsonObject Object
-  | JsonArray [Value]
+  | JsonArray [JsonValue]
   | JsonString String
   | JsonNumber Double
   | JsonBool Bool
   | JsonNull
   deriving (Eq, Show)
 
-jsonNull :: Parser Value
+lexer = P.makeTokenParser emptyDef
+
+stringP = P.stringLiteral lexer
+
+commaSepP = P.commaSep lexer
+
+colonP = P.colon lexer
+
+jsonNull :: Parser JsonValue
 jsonNull = JsonNull <$ string "null"
 
-jsonObject :: Parser Value
-jsonObject = char '{' *> spaces *> members <* spaces <* char '}'
+jsonObject :: Parser JsonValue
+jsonObject = JsonObject <$> P.braces lexer (spaces *> members <* spaces)
   where
-    members = undefined
+    members = P.commaSep lexer (spaces *> member <* spaces)
+    member = liftA2 (,) (stringP <* spaces <* P.colon lexer) jsonValue
 
-jsonArray :: Parser Value
-jsonArray = do
-  char '['
-  xs <- sepBy jsonValue (spaces *> char ',' <* spaces)
-  char ']'
-  return $ JsonArray xs
+jsonArray :: Parser JsonValue
+jsonArray = JsonArray <$> P.brackets lexer (sepBy jsonValue (spaces *> char ',' <* spaces))
 
--- Doesn't handle escaped strings for now
-jsonString :: Parser Value
-jsonString = JsonString <$> (char '"' *> manyTill anyChar (char '"'))
+jsonString :: Parser JsonValue
+jsonString = JsonString <$> stringP
 
 -- see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/parsing-floats-with-parsec
 -- parse positive int for now
-jsonNumber :: Parser Value
-jsonNumber = do
-  n <- many1 digit
-  return $ JsonNumber (read n)
+jsonNumber :: Parser JsonValue
+jsonNumber = JsonNumber . fromIntegral <$> P.integer lexer
 
-jsonBool :: Parser Value
+jsonBool :: Parser JsonValue
 jsonBool =
   JsonBool True <$ string "true"
     <|> JsonBool False <$ string "false"
 
-jsonValue :: Parser Value
+jsonValue :: Parser JsonValue
 jsonValue =
   jsonNull
     <|> jsonBool
