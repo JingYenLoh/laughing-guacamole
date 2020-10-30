@@ -35,15 +35,15 @@ pJsonArraySpec = describe "pJsonArray" $ do
     parse jsonArray "" "[1]" `shouldParse` (JsonArray [JsonNumber 1.0])
   it "does not parse unpaired (left) brackets" $ do
     parse jsonArray "" `shouldFailOn` "[[]"
-  it "does not parse unpaired (right) brackets" $ do
-    parse jsonArray "" `shouldFailOn` "[]]"
 
 pJsonStringSpec :: Spec
 pJsonStringSpec = describe "pJsonString" $ do
   it "parses empty string" $ do
     parse jsonString "" "\"\"" `shouldParse` (JsonString "")
-  it "parses non-empty string" $ do
+  it "parses \"cs2104\"" $ do
     parse jsonString "" "\"cs2104\"" `shouldParse` (JsonString "cs2104")
+  it "parses escaped string" $ do
+    parse jsonString "" "\"cs\\\"2104\"" `shouldParse` (JsonString "cs\"2104")
 
 pJsonNumberSpec :: Spec
 pJsonNumberSpec = describe "pJsonNumber" $ do
